@@ -23,3 +23,7 @@ In order to render your own data, there's two variables near the top of the file
         * latitude: latitude of the center coordinate of the map
         * longitude: longitude of the center coordinate of the map
         * zoom: default zoom level for the map
+
+To use, just copy the file and set up the aforementioned variables, then open the page in any modern browser. It should look like this:
+
+![src/deck.gl.html](https://github.com/serratus-bio/serratus-geo-utils/raw/main/misc/readme/deck.gl.html.png)
