@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta content="initial-scale=1,width=device-width" name="viewport">
+		<title>deck.gl</title>
+		<style type="text/css">
+      body {
+        background-color: #EEE;
+        height: 100vh;
+        margin: 0;
+        width: 100vw;
+      }
+		</style>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+		<script type="module">
+      const DECKGL_ICONLAYER_DATA = [
+        { color:[255, 64, 64], coordinates:[-122.123801,37.893394], tooltip:"Lafayette (LAFY)" },
+        { color:[255, 64, 64], coordinates:[-122.271604,37.803664], tooltip:"12th St. Oakland City Center (12TH)" },
+        { color:[255, 64, 64], coordinates:[-122.419694,37.765062], tooltip:"16th St. Mission (16TH)" },
+        { color:[255, 64, 64], coordinates:[-122.269029,37.80787],  tooltip:"19th St. Oakland (19TH)" },
+        { color:[255, 64, 64], coordinates:[-122.418466,37.752254], tooltip:"24th St. Mission (24TH)" },
+        { color:[255, 64, 64], coordinates:[-122.26978,37.853024],  tooltip:"Ashby (ASHB)" },
+        { color:[255, 64, 64], coordinates:[-122.447414,37.721981], tooltip:"Balboa Park (BALB)" },
+        { color:[255, 64, 64], coordinates:[-122.126871,37.697185], tooltip:"Bay Fair (BAYF)" },
+        { color:[255, 64, 64], coordinates:[-122.075567,37.690754], tooltip:"Castro Valley (CAST)" },
+        { color:[255, 64, 64], coordinates:[-122.413756,37.779528], tooltip:"Civic Center/UN Plaza (CIVC)" },
+        { color:[255, 64, 64], coordinates:[-122.466233,37.684638], tooltip:"Colma (COLM)" },
+        { color:[255, 64, 64], coordinates:[-122.197273,37.754006], tooltip:"Coliseum/Oakland Airport (COLS)" },
+        { color:[255, 64, 64], coordinates:[-122.029095,37.973737], tooltip:"Concord (CONC)" },
+        { color:[255, 64, 64], coordinates:[-122.469081,37.706121], tooltip:"Daly City (DALY)" },
+        { color:[255, 64, 64], coordinates:[-122.268045,37.869867], tooltip:"Downtown Berkeley (DBRK)" },
+        { color:[255, 64, 64], coordinates:[-122.317269,37.925655], tooltip:"El Cerrito del Norte (DELN)" },
+        { color:[255, 64, 64], coordinates:[-121.900367,37.701695], tooltip:"Dublin/Pleasanton (DUBL)" },
+        { color:[255, 64, 64], coordinates:[-122.396742,37.792976], tooltip:"Embarcadero (EMBR)" },
+        { color:[255, 64, 64], coordinates:[-121.9764,37.557355],   tooltip:"Fremont (FRMT)" },
+        { color:[255, 64, 64], coordinates:[-122.224274,37.774963], tooltip:"Fruitvale (FTVL)" },
+        { color:[255, 64, 64], coordinates:[-122.434092,37.732921], tooltip:"Glen Park (GLEN)" },
+        { color:[255, 64, 64], coordinates:[-122.087967,37.670399], tooltip:"Hayward (HAYW)" },
+        { color:[255, 64, 64], coordinates:[-122.265609,37.797484], tooltip:"Lake Merritt (LAKE)" },
+        { color:[255, 64, 64], coordinates:[-122.267227,37.828415], tooltip:"MacArthur (MCAR)" },
+        { color:[255, 64, 64], coordinates:[-122.38666,37.599787],  tooltip:"Millbrae (MLBR)" },
+        { color:[255, 64, 64], coordinates:[-122.401407,37.789256], tooltip:"Montgomery St. (MONT)" },
+        { color:[255, 64, 64], coordinates:[-122.283451,37.87404],  tooltip:"North Berkeley (NBRK)" },
+        { color:[255, 64, 64], coordinates:[-122.024597,38.003275], tooltip:"North Concord/Martinez (NCON)" },
+        { color:[255, 64, 64], coordinates:[-122.183791,37.878361], tooltip:"Orinda (ORIN)" },
+        { color:[255, 64, 64], coordinates:[-122.056013,37.928403], tooltip:"Pleasant Hill/Contra Costa Centre (PHIL)" },
+        { color:[255, 64, 64], coordinates:[-121.945154,38.018914], tooltip:"Pittsburg/Bay Point (PITT)" },
+        { color:[255, 64, 64], coordinates:[-122.299272,37.903059], tooltip:"El Cerrito Plaza (PLZA)" },
+        { color:[255, 64, 64], coordinates:[-122.406857,37.784991], tooltip:"Powell St. (POWL)" },
+        { color:[255, 64, 64], coordinates:[-122.353165,37.936887], tooltip:"Richmond (RICH)" },
+        { color:[255, 64, 64], coordinates:[-122.251793,37.844601], tooltip:"Rockridge (ROCK)" },
+        { color:[255, 64, 64], coordinates:[-122.161311,37.722619], tooltip:"San Leandro (SANL)" },
+        { color:[255, 64, 64], coordinates:[-122.416038,37.637753], tooltip:"San Bruno (SBRN)" },
+        { color:[255, 64, 64], coordinates:[-122.392612,37.616035], tooltip:"San Francisco Int'l Airport (SFIA)" },
+        { color:[255, 64, 64], coordinates:[-122.057551,37.6348],   tooltip:"South Hayward (SHAY)" },
+        { color:[255, 64, 64], coordinates:[-122.444116,37.664174], tooltip:"South San Francisco (SSAN)" },
+        { color:[255, 64, 64], coordinates:[-122.017867,37.591208], tooltip:"Union City (UCTY)" },
+        { color:[255, 64, 64], coordinates:[-122.067423,37.905628], tooltip:"Walnut Creek (WCRK)" },
+        { color:[255, 64, 64], coordinates:[-121.928099,37.699759], tooltip:"West Dublin/Pleasanton (WDUB)" },
+        { color:[255, 64, 64], coordinates:[-122.294582,37.804675], tooltip:"West Oakland (WOAK)" }
+      ];
+      const DECKGL_INITIALVIEWSTATE = {
+        latitude:37.8,
+        longitude:-122.2,
+        zoom:10
+      };
+
+      window.addEventListener('load', async function() {
+        new deck.DeckGL({
+          controller:true,
+          getTooltip:d => d.object?.tooltip,
+          initialViewState:DECKGL_INITIALVIEWSTATE,
+          layers:[
+            new deck.IconLayer({
+              data:DECKGL_ICONLAYER_DATA,
+              getColor:d => d.color,
+              getIcon:d => ({
+                anchorY:256,
+                height:256,
+                mask:true,
+                url:'data:image/png;base64,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Av8ToxcBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgO34f+Hd8LApaTm8AAAAAElFTkSuQmCC',
+                width:256
+              }),
+              getPosition:d => d.coordinates,
+              getSize:d => 8,
+              pickable:true,
+              sizeScale:8
+            })
+          ],
+          mapStyle:'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
+        });
+      });
+		</script>
+	</head>
+	<body></body>
+</html>
